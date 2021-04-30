@@ -62,6 +62,46 @@ function ImageEditorCore(props: ImageEditorProps) {
   );
   const [, setThrottleBlur] = useRecoilState(throttleBlurState);
 
+  const onPerformCrop = async () => {
+    // Calculate cropping bounds
+    const croppingBounds = {
+      originX: Math.round(
+        (accumulatedPan.x - imageBounds.x) * imageScaleFactor
+      ),
+      originY: Math.round(
+        (accumulatedPan.y - imageBounds.y) * imageScaleFactor
+      ),
+      width: Math.round(cropSize.width * imageScaleFactor),
+      height: Math.round(cropSize.height * imageScaleFactor),
+    };
+    // Set the editor state to processing and perform the crop
+    setProcessing(true);
+    const cropResult = await ImageManipulator.manipulateAsync(imageData.uri, [
+      { crop: croppingBounds },
+    ]);
+    // Check if on web - currently there is a weird bug where it will keep
+    // the canvas from ImageManipualtor at originX + width and so we'll just crop
+    // the result again for now if on web - TODO write github issue!
+    var imgData = {}
+    if (Platform.OS == "web") {
+      const webCorrection = await ImageManipulator.manipulateAsync(
+        cropResult.uri,
+        [{ crop: { ...croppingBounds, originX: 0, originY: 0 } }]
+      );
+      const { uri, width, height } = webCorrection;
+      imgData = {uri, width, height}
+      setImageData(imgData);
+    } else {
+      const { uri, width, height } = cropResult;
+      imgData = {uri, width, height}
+      setImageData(imgData);
+    }
+    setProcessing(false);
+    setEditingMode("operation-select");
+    props.onEditingComplete(imgData);
+    onCloseEditor()
+  };
+
   // Initialise the image data when it is set through the props
   React.useEffect(() => {
     (async () => {
@@ -157,7 +197,7 @@ function ImageEditorCore(props: ImageEditorProps) {
                   ? props.onCloseEditor()
                   : setEditingMode("operation-select")
               }
-              onFinishEditing={() => onFinishEditing()}
+              onFinishEditing={() => onPerformCrop()}
             />
             <EditingWindow />
             {/* <OperationBar /> */}

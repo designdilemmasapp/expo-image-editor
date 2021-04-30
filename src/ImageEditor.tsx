@@ -160,7 +160,7 @@ function ImageEditorCore(props: ImageEditorProps) {
               onFinishEditing={() => onFinishEditing()}
             />
             <EditingWindow />
-            <OperationBar />
+            {/* <OperationBar /> */}
           </View>
         ) : null}
         {processing ? <Processing /> : null}

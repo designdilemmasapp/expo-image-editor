@@ -28,7 +28,7 @@ function EditingWindow() {
   const [, setGLContext] = useRecoilState(glContextState);
 
   // Get some readable boolean states
-  const isCropping = editingMode === "crop";
+  const isCropping = true // editingMode === "crop";
   const isBlurring = editingMode === "blur";
   const usesGL = isBlurring;
 

@@ -98,7 +98,7 @@ function ImageEditorCore(props: ImageEditorProps) {
     }
     setProcessing(false);
     setEditingMode("operation-select");
-    props.onEditingComplete(imgData);
+    await props.onEditingComplete(imgData);
     onCloseEditor()
   };
 

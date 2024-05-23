@@ -57,7 +57,7 @@
     "expo-file-system": "^9.2.0",
     "expo-gl": "^9.1.1",
     "expo-gl-cpp": "^9.1.2",
-    "expo-image-manipulator": "~8.3.0",
+    "expo-image-manipulator": "^12.0.5",
     "modal-enhanced-react-native-web": "^0.2.0",
     "modal-react-native-web": "^0.2.0",
     "no-scroll": "^2.1.1",

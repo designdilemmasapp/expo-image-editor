@@ -53,7 +53,7 @@
     "@miblanchard/react-native-slider": "^1.5.0",
     "@react-hook/throttle": "^2.2.0",
     "@types/lodash": "^4.14.157",
-    "expo-asset": "^8.1.7",
+    "expo-asset": "^10.0.6",
     "expo-file-system": "^9.2.0",
     "expo-gl": "^9.1.1",
     "expo-gl-cpp": "^9.1.2",
